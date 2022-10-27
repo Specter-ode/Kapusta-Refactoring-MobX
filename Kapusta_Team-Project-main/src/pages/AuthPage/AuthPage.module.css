@@ -1,0 +1,108 @@
+.form_wrapper {
+  position: relative;
+  height: 800px;
+}
+.title {
+  width: 183px;
+  margin-left: 20px;
+}
+.phrase {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--second-color);
+  margin-left: 31px;
+  padding-bottom: 50px;
+}
+.backgraund_title {
+  position: relative;
+  background-color: var(--bg-color);
+  padding-top: 86px;
+  min-height: 286px;
+  border-radius: 0px 0px 0px 25%;
+}
+.icon {
+  position: absolute;
+  bottom: 93px;
+  right: 0;
+}
+.Second_icon {
+  z-index: -1;
+  position: absolute;
+  margin-left: 35px;
+  bottom: 0;
+}
+.duble_icon {
+  position: absolute;
+  margin-left: 197px;
+  bottom: 115px;
+  z-index: -1;
+  transform: scale(-1, 1);
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: 480px;
+  }
+  .duble_icon {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .form_wrapper {
+    height: 968px;
+  }
+  .phrase {
+    margin-left: 225px;
+    padding-bottom: 345px;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.18em;
+  }
+  .title {
+    width: 300px;
+    margin-left: 170px;
+    height: 77px;
+  }
+  .backgraund_title {
+    padding-top: 80px;
+    border-radius: 0px 0px 0px 15%;
+    background-image: url(../../assets/png/fon.png);
+    background-size: 1334px 232px;
+    background-repeat: no-repeat;
+    background-position: 0px 20px;
+  }
+  .icon {
+    display: none;
+  }
+  .Second_icon {
+    margin-left: 103px;
+    bottom: 90px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    width: 1200px;
+  }
+  .title {
+    width: 377px;
+    margin-left: 229px;
+    height: 120px;
+  }
+  .form_wrapper {
+    height: 794px;
+  }
+  .backgraund_title {
+    padding-top: 308px;
+    background-position: 140px 20px;
+  }
+  .phrase {
+    margin-left: 301px;
+    padding-bottom: 98px;
+  }
+}

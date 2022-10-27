@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  padding: 0 20px;
+}
+.list {
+  display: flex;
+}
+.item {
+  list-style-type: none;
+}
+.item:not(:last-child) {
+  margin-right: 30px;
+}
+.logo {
+  width: 90px;
+}
+.wrapper_logo {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.container_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+
+@media screen and (max-width: 767px) {
+}
+@media screen and (min-width: 768px) {
+  .wrapper_logo {
+    margin-right: auto;
+    margin-left: 32px;
+  }
+}
