@@ -1,15 +1,16 @@
 import * as api from 'helpers/transactions';
 import { toast } from 'react-toastify';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, toJS } from 'mobx';
 
 class TransactionStore {
   incomeCategories = [];
   expenseCategories = [];
-  periodData = '';
-  incomeTransactions = [];
-  expenseTransactions = [];
+  periodData = {};
+  incomeTransactions = {};
+  expenseTransactions = {};
   loading = false;
   error = null;
+  testIncome = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -20,7 +21,12 @@ class TransactionStore {
   setLoading = bool => {
     this.loading = bool;
   };
-
+  get income() {
+    return this.incomeTransactions.incomes;
+  }
+  get expense() {
+    return this.expenseTransactions.expenses;
+  }
   getIncomeCategories = async () => {
     try {
       this.setError(null);
@@ -92,20 +98,10 @@ class TransactionStore {
   };
 
   addExpense = async data => {
-    // const isDublicate = this.items.find(
-    //   item => item.name.toLowerCase() === data.name.toLowerCase()
-    // );
-    // if (isDublicate) {
-    //   toast.error(`${data.name} is already in contacts`, {
-    //     theme: 'colored',
-    //   });
-    //   return;
-    // }
     try {
       this.setError(null);
       this.setLoading(true);
-      const result = await api.addExpense(data);
-      this.expenseTransactions.push(result);
+      await api.addExpense(data);
     } catch (error) {
       toast.error(`Sorry, expense transaction has not been added. `);
       this.setError(error);
@@ -117,8 +113,7 @@ class TransactionStore {
     try {
       this.setError(null);
       this.setLoading(true);
-      const result = await api.addIncome(data);
-      this.incomeTransactions.push(result);
+      await api.addIncome(data);
     } catch (error) {
       toast.error(`Sorry, income transaction has not been added. `);
       this.setError(error);
@@ -131,10 +126,11 @@ class TransactionStore {
     try {
       this.setError(null);
       this.setLoading(true);
-      await api.deleteTransaction(id);
-      this.expenseTransactions = this.expenseTransactions.filter(item => item.id !== id);
-      this.incomeTransactions = this.incomeTransactions.filter(item => item.id !== id);
+      console.log('id: ', id);
+      const result = await api.deleteTransaction(id);
+      console.log('result: ', result);
     } catch (error) {
+      console.log('error deleteTransaction: ', error);
       toast.error(
         `Sorry, request failed.Transaction has not been deleted. May be you have problems with network`
       );

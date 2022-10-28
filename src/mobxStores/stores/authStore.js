@@ -128,6 +128,7 @@ class AuthStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.currentUser();
+      this.setUserData(result);
       console.log('result getCurrentUser authStore: ', result);
       toast.info('getCurrentUser info');
     } catch (error) {

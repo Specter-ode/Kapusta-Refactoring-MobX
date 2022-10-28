@@ -12,23 +12,21 @@ import Calendar from 'components/Calendar/Calendar';
 // } from 'redux/transaction/transactionOperations';
 
 import Summary from '../Summary/Summary';
-import { TransactionDetails } from '../TransactionDetails/TransactionDetails';
+import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import { ReactComponent as BackArrow } from 'assets/svg/back-arrow.svg';
 import { ReactComponent as Calculator } from 'assets/svg/calculator.svg';
 import useWindowDimensions from 'redux/hooks/hooks';
 import { observer } from 'mobx-react-lite';
-import { transactionStore } from 'mobxStores/stores';
+import { transactionStore, authStore } from 'mobxStores/stores';
 
-export const ExpensesAndIncome = observer(({ date, setDate }) => {
+const ExpensesAndIncome = ({ date, setDate }) => {
   const params = useParams();
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
-  const { expenseCategories, incomeCategories, addExpense, addIncome } = transactionStore;
-  // const { data: expenseCategories } = useGetExpenseCategoriesQuery();
-  // const { data: incomeCategories } = useGetIncomeCategoriesQuery();
-  // const [addExpense] = useAddExpenseMutation();
-  // const [addIncome] = useAddIncomeMutation();
+  const { expenseCategories, incomeCategories, addExpense, addIncome, getExpense, getIncome } =
+    transactionStore;
+  const { getCurrentUser } = authStore;
   const location = useLocation();
   let currentDate = date.toJSON().slice(0, 10);
 
@@ -65,11 +63,20 @@ export const ExpensesAndIncome = observer(({ date, setDate }) => {
       date: currentDate,
       category,
     };
-
     if (location.pathname === '/transactions/expenses') {
       addExpense(transactionObject);
+      if (window.innerWidth > 767) {
+        getExpense();
+      } else {
+        getCurrentUser();
+      }
     } else {
       addIncome(transactionObject);
+      if (window.innerWidth > 767) {
+        getIncome();
+      } else {
+        getCurrentUser();
+      }
     }
     setDescription('');
     setCategory('');
@@ -158,4 +165,6 @@ export const ExpensesAndIncome = observer(({ date, setDate }) => {
       </div>
     </>
   );
-});
+};
+
+export default observer(ExpensesAndIncome);

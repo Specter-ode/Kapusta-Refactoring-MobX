@@ -2,9 +2,9 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { authStore } from 'mobxStores/stores';
 import { observer } from 'mobx-react-lite';
 
-const PrivateRoute = observer(() => {
+const PrivateRoute = () => {
   const { currentUser, accessToken } = authStore;
   return <>{currentUser && accessToken ? <Outlet /> : <Navigate to="/" />}</>;
-});
+};
 
-export default PrivateRoute;
+export default observer(PrivateRoute);

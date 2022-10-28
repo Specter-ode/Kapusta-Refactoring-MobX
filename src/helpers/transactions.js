@@ -37,7 +37,7 @@ export const addExpense = async body => {
 };
 
 export const addIncome = async body => {
-  const result = await instance.post('/transaction/expense', body);
+  const result = await instance.post('/transaction/income', body);
   console.log('addIncome result: ', result);
   return result.data;
 };

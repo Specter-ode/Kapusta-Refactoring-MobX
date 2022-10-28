@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 // import { useGetIncomeQuery, useGetExpenseQuery } from 'redux/transaction/transactionOperations';
 import s from './Summary.module.css';
 
-const Summary = observer(({ params = '' }) => {
+const Summary = ({ params = '' }) => {
   const checkType = Object?.values(params)[0];
   const [showIncomes, setShowIncomes] = useState(false);
   const [showExpenses, setShowExpenses] = useState(true);
@@ -67,6 +67,6 @@ const Summary = observer(({ params = '' }) => {
       )}
     </div>
   );
-});
+};
 
-export default Summary;
+export default observer(Summary);

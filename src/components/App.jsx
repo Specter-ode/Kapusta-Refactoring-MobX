@@ -7,7 +7,7 @@ import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { observer } from 'mobx-react-lite';
 
-export const App = observer(() => {
+const App = () => {
   // useEffect(() => {
   //   if (!authStore.currentUser && authStore.accessToken) {
   //     console.log('запрос authStore.getCurrentUser: ');
@@ -29,4 +29,5 @@ export const App = observer(() => {
       />
     </div>
   );
-});
+};
+export default observer(App);

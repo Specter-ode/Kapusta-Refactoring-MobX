@@ -1,37 +1,27 @@
 import { ConfirmActionModal } from 'components/Modal/QuestionModal';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-// import {
-//   useGetExpenseQuery,
-//   useGetIncomeQuery,
-//   useDeleteTransactionMutation,
-// } from 'redux/transaction/transactionOperations';
 import { observer } from 'mobx-react-lite';
 import { transactionStore } from 'mobxStores/stores';
 import s from './TransactionDetails.module.css';
+import { toJS } from 'mobx';
 
-export const TransactionDetails = observer(() => {
+const TransactionDetails = () => {
   const [modal, setModal] = useState(false);
   const [transactionOnDeleteId, setTransactionOnDeleteId] = useState('');
   const location = useLocation();
-  // const [deleteTransaction] = useDeleteTransactionMutation();
-
-  // const { data: expenseData = [] } = useGetExpenseQuery();
-  // const { data: incomeData = [] } = useGetIncomeQuery();
-
-  // const { expenses } = expenseData;
-  // const { incomes } = incomeData;
-  const { getIncomeTransactions, getExpenseTransactions, deleteTransaction } = transactionStore;
-  const { expenses } = getIncomeTransactions();
-  console.log('expenses: ', expenses);
-  const { incomes } = getExpenseTransactions();
-  console.log('incomes: ', incomes);
-  const transactionsType = location.pathname === '/transactions/expenses' ? expenses : incomes;
-
+  const { deleteTransaction, income, expense, getExpense, getIncome } = transactionStore;
+  const transactionsType = location.pathname === '/transactions/expenses' ? expense : income;
+  console.log('transactionsType: ', toJS(transactionsType));
   const handleDeleteTransaction = async id => {
     setModal(false);
     try {
       await deleteTransaction(id);
+      if (transactionsType === expense) {
+        getExpense();
+      } else {
+        getIncome();
+      }
     } catch (error) {
       return error.message;
     }
@@ -106,4 +96,5 @@ export const TransactionDetails = observer(() => {
       </div>
     </>
   );
-});
+};
+export default observer(TransactionDetails);

@@ -1,6 +1,6 @@
 import s from './Dashboard.module.css';
 import { useLocation } from 'react-router-dom';
-import { TransactionDetailsMobile } from './TransactionDetails/TransactionsDetailsMobile/TransactionsDetailsMobile';
+import TransactionDetailsMobile from './TransactionDetails/TransactionsDetailsMobile/TransactionsDetailsMobile';
 import { ButtonTransactions } from './ExpensesAndIncome/Button';
 import useWindowDimensions from 'redux/hooks/hooks';
 
