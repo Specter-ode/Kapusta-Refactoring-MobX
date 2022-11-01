@@ -1,17 +1,15 @@
 import { observer } from 'mobx-react-lite';
 import { transactionStore } from 'mobxStores/stores';
 import { useEffect, useState } from 'react';
-// import { useGetIncomeQuery, useGetExpenseQuery } from 'redux/transaction/transactionOperations';
 import s from './Summary.module.css';
-
+import { toJS } from 'mobx';
 const Summary = ({ params = '' }) => {
   const checkType = Object?.values(params)[0];
   const [showIncomes, setShowIncomes] = useState(false);
   const [showExpenses, setShowExpenses] = useState(true);
   const { incomeTransactions = [], expenseTransactions = [] } = transactionStore;
-  // const { data: income = [] } = useGetIncomeQuery();
-  // const { data: expense = [] } = useGetExpenseQuery();
-
+  const income = toJS(incomeTransactions.incomes).length;
+  const expense = toJS(expenseTransactions.expenses).length;
   useEffect(() => {
     if (checkType === 'expenses') {
       setShowExpenses(true);
@@ -23,6 +21,19 @@ const Summary = ({ params = '' }) => {
       setShowExpenses(false);
     }
   }, [checkType]);
+
+  useEffect(() => {
+    if (checkType === 'expenses') {
+      transactionStore.getExpense();
+      console.log('Summary transactionStore.getExpense: ');
+      return;
+    }
+    if (checkType === 'incomes') {
+      console.log('Summary transactionStore.getIncome: ');
+      transactionStore.getIncome();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [expense, income]);
 
   const getExpenseMonthArray = () => {
     const objectToArray = Object.entries(expenseTransactions.monthsStats);

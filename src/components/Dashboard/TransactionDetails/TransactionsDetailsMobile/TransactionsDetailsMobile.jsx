@@ -3,34 +3,22 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { ConfirmActionModal } from 'components/Modal/QuestionModal';
 import { observer } from 'mobx-react-lite';
-import { transactionStore, authStore } from 'mobxStores/stores';
+import { authStore } from 'mobxStores/stores';
 import { toJS } from 'mobx';
 
 const TransactionDetailsMobile = () => {
   const [modal, setModal] = useState(false);
-  const getUserTransaction = authStore.userData.transactions;
   const [transactionOnDeleteId, setTransactionOnDeleteId] = useState('');
-  const [totalArr, setTotalArr] = useState(() => getUserTransaction);
-
-  const { deleteTransaction } = transactionStore;
-  const { getCurrentUser } = authStore;
-
-  // useEffect(() => {
-  //   setTotalArr([...getUserTransaction].reverse());
-  // }, [getUserTransaction]);
+  const { deleteTransactionMob, userData } = authStore;
 
   const handleDeleteTransaction = async id => {
     setModal(false);
     try {
-      await deleteTransaction(id);
-      await getCurrentUser();
-      setTotalArr(totalArr.filter(item => item._id !== id));
+      await deleteTransactionMob(id);
     } catch (error) {
       return error.message;
     }
   };
-  console.log('totalArr: ', totalArr.length);
-  console.log('getUserTransaction: ', toJS(getUserTransaction.length));
   const amountNormalizer = (sign, amount) => {
     return `${sign}` + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ') + ' грн.';
   };
@@ -38,7 +26,7 @@ const TransactionDetailsMobile = () => {
     setModal(true);
     setTransactionOnDeleteId(id);
   };
-  const elements = totalArr.map(item => {
+  const elements = userData.transactions.map(item => {
     const transactionsType = item.category === 'З/П' || item.category === 'Доп. доход';
     return (
       <li className={s.list__item} key={item._id}>
@@ -62,7 +50,7 @@ const TransactionDetailsMobile = () => {
   });
   return (
     <div className={s.tableContainer}>
-      <ul className={s.list}>{elements}</ul>
+      <ul className={s.list}>{elements.reverse()}</ul>
       {modal && (
         <ConfirmActionModal
           title="Are you sure?"

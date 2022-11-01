@@ -11,17 +11,16 @@ const TransactionDetails = () => {
   const [transactionOnDeleteId, setTransactionOnDeleteId] = useState('');
   const location = useLocation();
   const { deleteTransaction, income, expense, getExpense, getIncome } = transactionStore;
-  const transactionsType = location.pathname === '/transactions/expenses' ? expense : income;
-  console.log('transactionsType: ', toJS(transactionsType));
+  const transactions = location.pathname === '/transactions/expenses' ? expense : income;
   const handleDeleteTransaction = async id => {
     setModal(false);
     try {
       await deleteTransaction(id);
-      if (transactionsType === expense) {
-        getExpense();
-      } else {
-        getIncome();
-      }
+      // if (transactionsType === expense) {
+      //   getExpense();
+      // } else {
+      //   getIncome();
+      // }
     } catch (error) {
       return error.message;
     }
@@ -62,7 +61,7 @@ const TransactionDetails = () => {
         <div className={s.scrollTableBody}>
           <table>
             <tbody>
-              {transactionsType
+              {transactions
                 ?.map(({ date, description, category, amount, _id }) => {
                   const normalizeDate = new Date(date).toLocaleDateString('en-GB');
                   return (

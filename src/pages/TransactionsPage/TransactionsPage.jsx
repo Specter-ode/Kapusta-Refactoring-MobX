@@ -18,6 +18,7 @@ const TransactionsPage = () => {
   const { currentUser, accessToken } = authStore;
   useEffect(() => {
     if (currentUser && accessToken) {
+      console.log('пошли гет запросы');
       getExpense();
       getIncome();
       getExpenseCategories();

@@ -24,21 +24,6 @@ const Balance = observer(() => {
     setEnteredBalance(value);
   };
   const inputStatus = transactions.length > 0;
-  // const { data: expenseData = [] } = useGetExpenseQuery();
-  // const { data: incomeData = [] } = useGetIncomeQuery();
-  // const { expenses } = expenseData;
-  // console.log('expenses: ', expenses);
-  // const { incomes } = incomeData;
-  // console.log('incomes: ', incomes);
-
-  // useEffect(() => {
-  //   authStore.getCurrentUser();
-  // }, [expenses, incomes]);
-
-  // useEffect(() => {
-  //   authStore.getCurrentUser();
-  // }, []);
-
   useEffect(() => {
     setAmount(`${getUserBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ')} UAH`);
   }, [getUserBalance]);

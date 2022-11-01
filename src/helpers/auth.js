@@ -36,11 +36,8 @@ export const authGoogle = async () => {
 
 export const login = async data => {
   const result = await instance.post('/auth/login', data);
+  console.log('result: ', result);
   setToken(result.data.accessToken);
-  console.log(
-    'registration instance.defaults.headers.authorization: ',
-    instance.defaults.headers.authorization
-  );
   return result.data;
 };
 

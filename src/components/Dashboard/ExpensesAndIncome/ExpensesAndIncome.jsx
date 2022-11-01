@@ -4,13 +4,6 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { NavLink, useLocation, useParams } from 'react-router-dom';
 import Calendar from 'components/Calendar/Calendar';
-// import {
-//   useAddExpenseMutation,
-//   useAddIncomeMutation,
-//   useGetExpenseCategoriesQuery,
-//   useGetIncomeCategoriesQuery,
-// } from 'redux/transaction/transactionOperations';
-
 import Summary from '../Summary/Summary';
 import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import { ReactComponent as BackArrow } from 'assets/svg/back-arrow.svg';
@@ -24,9 +17,8 @@ const ExpensesAndIncome = ({ date, setDate }) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
-  const { expenseCategories, incomeCategories, addExpense, addIncome, getExpense, getIncome } =
-    transactionStore;
-  const { getCurrentUser } = authStore;
+  const { expenseCategories, incomeCategories, addExpense, addIncome } = transactionStore;
+  const { addExpenseMob, addIncomeMob, setNewBalance } = authStore;
   const location = useLocation();
   let currentDate = date.toJSON().slice(0, 10);
 
@@ -51,6 +43,7 @@ const ExpensesAndIncome = ({ date, setDate }) => {
     price.length > 0 &&
     category.length > 0 &&
     category !== 'Product category';
+
   const handleSubmit = e => {
     e.preventDefault();
     if (!buttonStatus) {
@@ -63,19 +56,33 @@ const ExpensesAndIncome = ({ date, setDate }) => {
       date: currentDate,
       category,
     };
+    // if (location.pathname === '/transactions/expenses') {
+    //   addExpense(transactionObject);
+    //   console.log('window.innerWidth: ', window.innerWidth);
+    //   if (window.innerWidth > 767) {
+    //     getExpense();
+    //   } else {
+    //     getCurrentUser();
+    //   }
+    // } else {
+    //   addIncome(transactionObject);
+    //   if (window.innerWidth > 767) {
+    //     getIncome();
+    //   } else {
+    //     getCurrentUser();
+    //   }
+    // }
     if (location.pathname === '/transactions/expenses') {
-      addExpense(transactionObject);
       if (window.innerWidth > 767) {
-        getExpense();
+        addExpense(transactionObject);
       } else {
-        getCurrentUser();
+        addExpenseMob(transactionObject);
       }
     } else {
-      addIncome(transactionObject);
       if (window.innerWidth > 767) {
-        getIncome();
+        addIncome(transactionObject);
       } else {
-        getCurrentUser();
+        addIncomeMob(transactionObject);
       }
     }
     setDescription('');

@@ -1,6 +1,7 @@
 import * as api from 'helpers/transactions';
 import { toast } from 'react-toastify';
 import { makeAutoObservable, toJS } from 'mobx';
+import { authStore } from './index';
 
 class TransactionStore {
   incomeCategories = [];
@@ -10,7 +11,6 @@ class TransactionStore {
   expenseTransactions = {};
   loading = false;
   error = null;
-  testIncome = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -20,6 +20,35 @@ class TransactionStore {
   };
   setLoading = bool => {
     this.loading = bool;
+  };
+  setIncomeCategories = data => {
+    this.incomeCategories = data;
+  };
+  setExpenseCategories = data => {
+    this.expenseCategories = data;
+  };
+  setPeriod = data => {
+    this.periodData = data;
+  };
+  setIncome = data => {
+    this.incomeTransactions = data;
+  };
+  setExpense = data => {
+    this.expenseTransactions = data;
+  };
+  setNewIncome = data => {
+    this.incomeTransactions.incomes.push(data);
+  };
+  setNewExpense = data => {
+    this.expenseTransactions.expenses.push(data);
+  };
+  setTransactions = deletedId => {
+    this.expenseTransactions.expenses = this.expenseTransactions.expenses.filter(
+      el => deletedId !== el._id
+    );
+    this.incomeTransactions.incomes = this.incomeTransactions.incomes.filter(
+      el => deletedId !== el._id
+    );
   };
   get income() {
     return this.incomeTransactions.incomes;
@@ -32,7 +61,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.getIncomeCategories();
-      this.incomeCategories = result;
+      this.setIncomeCategories(result);
     } catch (error) {
       toast.error(`Sorry, request failed. We can't load income categories.`);
       this.setError(error);
@@ -46,7 +75,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.getExpenseCategories();
-      this.expenseCategories = result;
+      this.setExpenseCategories(result);
     } catch (error) {
       toast.error(`Sorry, request failed. We can't load expense categories.`);
       this.setError(error);
@@ -60,7 +89,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.getPeriodData(data);
-      this.periodData = result;
+      this.setPeriod(result);
     } catch (error) {
       toast.error(`Sorry, request failed. We can't load period data.`);
       this.setError(error);
@@ -74,7 +103,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.getIncome();
-      this.incomeTransactions = result;
+      this.setIncome(result);
     } catch (error) {
       toast.error(`Sorry, request failed. We can't load expense categories.`);
       this.setError(error);
@@ -88,7 +117,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.getExpense();
-      this.expenseTransactions = result;
+      this.setExpense(result);
     } catch (error) {
       toast.error(`Sorry, request failed. We can't load expense categories.`);
       this.setError(error);
@@ -101,7 +130,10 @@ class TransactionStore {
     try {
       this.setError(null);
       this.setLoading(true);
-      await api.addExpense(data);
+      const result = await api.addExpense(data);
+      console.log('result addExpense: ', result);
+      this.setNewExpense(result.transaction);
+      authStore.setNewBalance(result.newBalance);
     } catch (error) {
       toast.error(`Sorry, expense transaction has not been added. `);
       this.setError(error);
@@ -113,7 +145,9 @@ class TransactionStore {
     try {
       this.setError(null);
       this.setLoading(true);
-      await api.addIncome(data);
+      const result = await api.addIncome(data);
+      this.setNewIncome(result.transaction);
+      authStore.setNewBalance(result.newBalance);
     } catch (error) {
       toast.error(`Sorry, income transaction has not been added. `);
       this.setError(error);
@@ -126,11 +160,10 @@ class TransactionStore {
     try {
       this.setError(null);
       this.setLoading(true);
-      console.log('id: ', id);
       const result = await api.deleteTransaction(id);
-      console.log('result: ', result);
+      this.setTransactions(id);
+      authStore.setNewBalance(result.newBalance);
     } catch (error) {
-      console.log('error deleteTransaction: ', error);
       toast.error(
         `Sorry, request failed.Transaction has not been deleted. May be you have problems with network`
       );

@@ -1,6 +1,7 @@
 import * as api from 'helpers/auth';
+import * as transactionsApi from 'helpers/transactions';
 import { toast } from 'react-toastify';
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, toJS } from 'mobx';
 
 class AuthStore {
   userData = {};
@@ -20,6 +21,9 @@ class AuthStore {
   setUserData = data => {
     this.userData = data;
   };
+  setNewBalance = newBalance => {
+    this.userData.balance = newBalance;
+  };
   setAccessToken = token => {
     this.accessToken = token;
   };
@@ -38,8 +42,58 @@ class AuthStore {
   setSid = n => {
     this.sid = n;
   };
+  setNewTransaction = data => {
+    this.userData.transactions.push(data);
+  };
+  setTransactions = deletedId => {
+    this.userData.transactions = this.userData.transactions.filter(el => deletedId !== el._id);
+  };
+  deleteTransactionMob = async id => {
+    try {
+      this.setError(null);
+      this.setLoading(true);
+      const result = await transactionsApi.deleteTransaction(id);
+      this.setNewBalance(result.newBalance);
+      this.setTransactions(id);
+    } catch (error) {
+      toast.error(
+        `Sorry, request failed.Transaction has not been deleted. May be you have problems with network`
+      );
+      this.setError(null);
+    } finally {
+      this.setLoading(false);
+    }
+  };
+  addExpenseMob = async data => {
+    try {
+      this.setError(null);
+      this.setLoading(true);
+      const result = await transactionsApi.addExpense(data);
+      console.log('result: ', result);
+      this.setNewTransaction(result.transaction);
+    } catch (error) {
+      console.log('error: ', error);
+      toast.error(`Sorry, expense transaction has not been added. `);
+      this.setError(error);
+    } finally {
+      this.setLoading(false);
+    }
+  };
+
+  addIncomeMob = async data => {
+    try {
+      this.setError(null);
+      this.setLoading(true);
+      const result = await transactionsApi.addIncome(data);
+      this.setNewTransaction(result.transaction);
+    } catch (error) {
+      toast.error(`Sorry, expense transaction has not been added. `);
+      this.setError(error);
+    } finally {
+      this.setLoading(false);
+    }
+  };
   register = async data => {
-    console.log('data register: ', data);
     try {
       this.setError(null);
       this.setLoading(true);
@@ -143,8 +197,8 @@ class AuthStore {
   updateUserBalance = async amount => {
     try {
       await api.userBalance({ newBalance: amount });
+      this.setNewBalance(amount);
       toast.success('Your balance was confirm');
-      // return balance;
     } catch (error) {
       toast.error('Your network is dead. Try it later');
       this.setError(error.response.data);
