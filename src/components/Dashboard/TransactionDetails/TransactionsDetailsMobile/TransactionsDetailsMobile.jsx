@@ -1,10 +1,8 @@
 import s from './TransactionDetailsMobile.module.css';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import { ConfirmActionModal } from 'components/Modal/QuestionModal';
 import { observer } from 'mobx-react-lite';
 import { authStore } from 'mobxStores/stores';
-import { toJS } from 'mobx';
 
 const TransactionDetailsMobile = () => {
   const [modal, setModal] = useState(false);

@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from 'components/App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import instance from './helpers/auth';
+import instance from './helpers/api/auth';
 import { authStore } from 'mobxStores/stores';
 import { GoogleOAuthProvider } from '@moeindana/google-oauth';
 // import { configure } from 'mobx';
@@ -19,13 +17,11 @@ import { GoogleOAuthProvider } from '@moeindana/google-oauth';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
       <BrowserRouter basename="/Kapusta_Team-Project/">
         <GoogleOAuthProvider clientId="360398004101-61pu4g5lqgm4i3oc66c0p0jssd3ofd2i.apps.googleusercontent.com">
           <App />
         </GoogleOAuthProvider>
       </BrowserRouter>
-    </Provider>
   </React.StrictMode>
 );
 

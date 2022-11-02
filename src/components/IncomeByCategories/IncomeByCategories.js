@@ -3,17 +3,12 @@ import { nanoid } from '@reduxjs/toolkit';
 import { InfinitySpin } from 'react-loader-spinner';
 import sprite from 'assets/svg/icons.svg';
 import backgroundSprite from 'assets/svg/symbols.svg';
-import {
-  useGetIncomeCategoriesQuery,
-  useGetIncomeQuery,
-} from 'redux/transaction/transactionOperations';
 import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import incomeCategoriesData from './incomeCategoriesData.json';
 import expenseCategoriesData from 'components/ExpenseByCategories/expenseCategoriesData.json';
 import { useEffect } from 'react';
 import { transactionStore } from 'mobxStores/stores';
 import { observer } from 'mobx-react-lite';
-import { toJS } from 'mobx';
 
 const getLinkClassName = ({ isActive }) => (isActive ? s.activeLink : s.link);
 

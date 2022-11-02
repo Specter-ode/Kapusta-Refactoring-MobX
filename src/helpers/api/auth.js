@@ -20,7 +20,6 @@ export const setRefreshToken = (refreshToken = '') => {
 
 export const registration = async body => {
   const result = await instance.post('/auth/register', body);
-  // setToken(result.data.accessToken);
   return result.data;
 };
 
@@ -36,7 +35,6 @@ export const authGoogle = async () => {
 
 export const login = async data => {
   const result = await instance.post('/auth/login', data);
-  console.log('login result: ', result);
   setToken(result.data.accessToken);
   return result.data;
 };

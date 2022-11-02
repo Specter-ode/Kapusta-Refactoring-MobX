@@ -1,7 +1,7 @@
-import * as api from 'helpers/auth';
-import * as transactionsApi from 'helpers/transactions';
+import * as api from 'helpers/api/auth';
+import * as transactionsApi from 'helpers/api/transactions';
 import { toast } from 'react-toastify';
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 class AuthStore {
   userData = {};
@@ -13,10 +13,7 @@ class AuthStore {
   currentUser = false;
 
   constructor() {
-    makeAutoObservable(
-      this
-      //   { deep: true }
-    );
+    makeAutoObservable(this);
   }
   setUserData = data => {
     this.userData = data;
@@ -69,10 +66,8 @@ class AuthStore {
       this.setError(null);
       this.setLoading(true);
       const result = await transactionsApi.addExpense(data);
-      console.log('result: ', result);
       this.setNewTransaction(result.transaction);
     } catch (error) {
-      console.log('error: ', error);
       toast.error(`Sorry, expense transaction has not been added. `);
       this.setError(error);
     } finally {
@@ -113,7 +108,6 @@ class AuthStore {
   };
 
   login = async data => {
-    console.log('data: ', data);
     try {
       this.setError(null);
       this.setLoading(true);
@@ -144,7 +138,6 @@ class AuthStore {
       this.setRefreshToken('');
       this.setIsLogin(false);
     } catch (error) {
-      console.log('error: ', error);
       toast.error(`Sorry, logout failed. Try again.`);
       this.setError(error.response.data);
     } finally {
@@ -201,7 +194,7 @@ class AuthStore {
       this.setNewBalance(amount);
       toast.success('Your balance was confirm');
     } catch (error) {
-      toast.error('Your network is dead. Try it later');
+      toast.error('Your network is dead. Try later');
       this.setError(error.response.data);
     }
   };

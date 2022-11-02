@@ -1,6 +1,6 @@
-import * as api from 'helpers/transactions';
+import * as api from 'helpers/api/transactions';
 import { toast } from 'react-toastify';
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { authStore } from './index';
 
 class TransactionStore {
@@ -138,7 +138,7 @@ class TransactionStore {
       this.setError(error);
     } finally {
       this.setLoading(false);
-    }
+    } 
   };
 
   addExpense = async data => {
@@ -146,7 +146,7 @@ class TransactionStore {
       this.setError(null);
       this.setLoading(true);
       const result = await api.addExpense(data);
-      console.log('result addExpense: ', result);
+
       this.setNewExpense(result.transaction);
       authStore.setNewBalance(result.newBalance);
     } catch (error) {

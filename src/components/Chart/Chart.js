@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { transactionStore } from 'mobxStores/stores';
 import { observer } from 'mobx-react-lite';
-import { toJS } from 'mobx';
 
 const formated = number =>
   new Intl.NumberFormat('uk', { minimumFractionDigits: 2 }).format(number).replace(',', '.');
@@ -37,9 +36,7 @@ const Chart = ({ dateTransactionFilter, category }) => {
   if (incomes !== undefined && expenses !== undefined) {
     MONTH_CASHFLOW.push(...incomes, ...expenses);
   }
-  console.log('MONTH_CASHFLOW: ', MONTH_CASHFLOW);
   const chosenCategoryUniqueLabels = handleChosenCategoryUniqueLabels(MONTH_CASHFLOW, category);
-  console.log('chosenCategoryUniqueLabels: ', chosenCategoryUniqueLabels);
 
   const diagramForSelectedMonth = chosenCategoryUniqueLabels
     ?.map(item => ({

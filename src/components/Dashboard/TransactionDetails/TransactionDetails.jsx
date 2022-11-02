@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { transactionStore } from 'mobxStores/stores';
 import s from './TransactionDetails.module.css';
-import { toJS } from 'mobx';
 
 const TransactionDetails = () => {
   const [modal, setModal] = useState(false);

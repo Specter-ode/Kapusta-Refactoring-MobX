@@ -8,7 +8,7 @@ import Summary from '../Summary/Summary';
 import TransactionDetails from '../TransactionDetails/TransactionDetails';
 import { ReactComponent as BackArrow } from 'assets/svg/back-arrow.svg';
 import { ReactComponent as Calculator } from 'assets/svg/calculator.svg';
-import useWindowDimensions from 'redux/hooks/hooks';
+import useWindowDimensions from 'helpers/hooks/windowDimension';
 import { observer } from 'mobx-react-lite';
 import { transactionStore, authStore } from 'mobxStores/stores';
 
