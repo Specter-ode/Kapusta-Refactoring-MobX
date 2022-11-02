@@ -50,11 +50,25 @@ class TransactionStore {
       el => deletedId !== el._id
     );
   };
+  changeExpenseMonthStats = (month, sum) => {
+    const newMonthStats = this.expenseTransactions.monthsStats;
+    newMonthStats[month] = newMonthStats[month] + sum;
+  };
+  changeIncomeMonthStats = (month, sum) => {
+    const newMonthStats = this.incomeTransactions.monthsStats;
+    newMonthStats[month] = newMonthStats[month] + sum;
+  };
   get income() {
     return this.incomeTransactions.incomes;
   }
   get expense() {
     return this.expenseTransactions.expenses;
+  }
+  get incomeStats() {
+    return this.incomeTransactions.monthsStats;
+  }
+  get expenseStats() {
+    return this.expenseTransactions.monthsStats;
   }
   getIncomeCategories = async () => {
     try {

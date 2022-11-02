@@ -36,7 +36,7 @@ export const authGoogle = async () => {
 
 export const login = async data => {
   const result = await instance.post('/auth/login', data);
-  console.log('result: ', result);
+  console.log('login result: ', result);
   setToken(result.data.accessToken);
   return result.data;
 };

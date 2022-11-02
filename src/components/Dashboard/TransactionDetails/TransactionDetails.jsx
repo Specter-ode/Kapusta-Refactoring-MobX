@@ -10,17 +10,29 @@ const TransactionDetails = () => {
   const [modal, setModal] = useState(false);
   const [transactionOnDeleteId, setTransactionOnDeleteId] = useState('');
   const location = useLocation();
-  const { deleteTransaction, income, expense, getExpense, getIncome } = transactionStore;
-  const transactions = location.pathname === '/transactions/expenses' ? expense : income;
+  const { deleteTransaction, income, expense, changeExpenseMonthStats, changeIncomeMonthStats } =
+    transactionStore;
+  let transactions = location.pathname === '/transactions/expenses' ? expense : income;
+
   const handleDeleteTransaction = async id => {
     setModal(false);
     try {
       await deleteTransaction(id);
-      // if (transactionsType === expense) {
-      //   getExpense();
-      // } else {
-      //   getIncome();
-      // }
+      if (location.pathname === '/transactions/expenses') {
+        const res = expense.find(el => el._id === id);
+        const month = new Date(res.date)
+          .toLocaleString('ru-Ru', { year: 'numeric', month: 'long' })
+          .split(' ')[0];
+        const normalizeMonth = month.charAt(0).toUpperCase() + month.slice(1);
+        changeExpenseMonthStats(normalizeMonth, -res.amount);
+      } else {
+        const res = income.find(el => el._id === id);
+        const month = new Date(res.date)
+          .toLocaleString('ru-Ru', { year: 'numeric', month: 'long' })
+          .split(' ')[0];
+        const normalizeMonth = month.charAt(0).toUpperCase() + month.slice(1);
+        changeIncomeMonthStats(normalizeMonth, -res.amount);
+      }
     } catch (error) {
       return error.message;
     }

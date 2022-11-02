@@ -1,6 +1,5 @@
 import s from './MonthTotal.module.css';
 import { InfinitySpin } from 'react-loader-spinner';
-// import { useGetPeriodDataQuery } from 'redux/transaction/transactionOperations';
 import { observer } from 'mobx-react-lite';
 import { transactionStore } from 'mobxStores/stores';
 

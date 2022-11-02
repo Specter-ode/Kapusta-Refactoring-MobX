@@ -17,8 +17,15 @@ const ExpensesAndIncome = ({ date, setDate }) => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
-  const { expenseCategories, incomeCategories, addExpense, addIncome } = transactionStore;
-  const { addExpenseMob, addIncomeMob, setNewBalance } = authStore;
+  const {
+    expenseCategories,
+    incomeCategories,
+    addExpense,
+    addIncome,
+    changeIncomeMonthStats,
+    changeExpenseMonthStats,
+  } = transactionStore;
+  const { addExpenseMob, addIncomeMob } = authStore;
   const location = useLocation();
   let currentDate = date.toJSON().slice(0, 10);
 
@@ -46,6 +53,9 @@ const ExpensesAndIncome = ({ date, setDate }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const month = date.toLocaleString('ru-Ru', { year: 'numeric', month: 'long' }).split(' ')[0];
+    const monthToCheck = month.charAt(0).toUpperCase() + month.slice(1);
+
     if (!buttonStatus) {
       toast.error('Fill in all the fields');
       return;
@@ -56,31 +66,18 @@ const ExpensesAndIncome = ({ date, setDate }) => {
       date: currentDate,
       category,
     };
-    // if (location.pathname === '/transactions/expenses') {
-    //   addExpense(transactionObject);
-    //   console.log('window.innerWidth: ', window.innerWidth);
-    //   if (window.innerWidth > 767) {
-    //     getExpense();
-    //   } else {
-    //     getCurrentUser();
-    //   }
-    // } else {
-    //   addIncome(transactionObject);
-    //   if (window.innerWidth > 767) {
-    //     getIncome();
-    //   } else {
-    //     getCurrentUser();
-    //   }
-    // }
+
     if (location.pathname === '/transactions/expenses') {
       if (window.innerWidth > 767) {
         addExpense(transactionObject);
+        changeExpenseMonthStats(monthToCheck, Number(price));
       } else {
         addExpenseMob(transactionObject);
       }
     } else {
       if (window.innerWidth > 767) {
         addIncome(transactionObject);
+        changeIncomeMonthStats(monthToCheck, Number(price));
       } else {
         addIncomeMob(transactionObject);
       }
