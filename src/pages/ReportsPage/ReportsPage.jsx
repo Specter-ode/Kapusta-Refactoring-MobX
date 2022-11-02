@@ -1,5 +1,5 @@
 import s from './ReportsPage.module.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import Balance from 'components/Balance/Balance';
@@ -11,12 +11,27 @@ import { ReactComponent as BackArrow } from 'assets/svg/back-arrow.svg';
 import { ReactComponent as LeftArrow } from 'assets/svg/left-arrow.svg';
 import { ReactComponent as RigthArrow } from 'assets/svg/right-arrow.svg';
 import Chart from 'components/Chart/Chart';
+import { transactionStore } from 'mobxStores/stores';
+import { observer } from 'mobx-react-lite';
 
 const ReportPage = () => {
   const [date, setDate] = useState(new Date());
   const [reportsType, setReportsType] = useState(false);
   const [category, setCategory] = useState(null);
 
+  const formatDate = date => {
+    let month = (date.getMonth() + 1).toString();
+    let year = date.getFullYear();
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    return [year, month].join('-');
+  };
+  const { getPeriodData } = transactionStore;
+
+  useEffect(() => {
+    getPeriodData(formatDate(date));
+  }, [date, getPeriodData]);
   // --- В normalizedStateDate Преобразуем дату со state в формат для сравнения с фортатом даты транзакции которая приходит с сервера----
   const normalizedStoreDate = date.toLocaleString('en', {
     year: 'numeric',
@@ -57,7 +72,7 @@ const ReportPage = () => {
             <ReportsDate date={date} setDate={setDate} />
           </div>
         </div>
-        <MonthTotal date={date} />
+        <MonthTotal />
         <div className={s.block}>
           <div className={s.types}>
             <button type="button" className={s.leftArrow} onClick={() => changeReportsVision()}>
@@ -104,4 +119,4 @@ const ReportPage = () => {
   );
 };
 
-export default ReportPage;
+export default observer(ReportPage);

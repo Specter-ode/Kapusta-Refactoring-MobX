@@ -11,6 +11,9 @@ import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import incomeCategoriesData from './incomeCategoriesData.json';
 import expenseCategoriesData from 'components/ExpenseByCategories/expenseCategoriesData.json';
 import { useEffect } from 'react';
+import { transactionStore } from 'mobxStores/stores';
+import { observer } from 'mobx-react-lite';
+import { toJS } from 'mobx';
 
 const getLinkClassName = ({ isActive }) => (isActive ? s.activeLink : s.link);
 
@@ -22,13 +25,11 @@ const IncomeByCategories = ({
   date,
 }) => {
   const navigate = useNavigate();
-  const { data: incomeCategories } = useGetIncomeCategoriesQuery();
-  const { data = [], isFetching } = useGetIncomeQuery();
-  const { incomes = [] } = data;
+  const { incomeCategories, incomeTransactions, loading } = transactionStore;
   const { pathname } = useLocation();
   const result = incomeCategories?.map(item => ({
     name: item,
-    amount: dateTransactionFilter(incomes).reduce((acc, cost) => {
+    amount: dateTransactionFilter(incomeTransactions.incomes).reduce((acc, cost) => {
       return item === cost.category ? acc + cost.amount : acc;
     }, 0),
     convertName: incomeCategoriesData[item],
@@ -80,7 +81,7 @@ const IncomeByCategories = ({
 
   return (
     <>
-      {isFetching ? (
+      {loading ? (
         <div className={s.spinner}>
           <InfinitySpin width="200" color="#3f51b5" />
         </div>
@@ -100,4 +101,4 @@ const IncomeByCategories = ({
   );
 };
 
-export default IncomeByCategories;
+export default observer(IncomeByCategories);

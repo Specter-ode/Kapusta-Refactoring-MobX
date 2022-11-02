@@ -70,6 +70,7 @@ class TransactionStore {
   get expenseStats() {
     return this.expenseTransactions.monthsStats;
   }
+
   getIncomeCategories = async () => {
     try {
       this.setError(null);

@@ -1,16 +1,26 @@
 import s from './Chart.module.css';
-import { useGetExpenseQuery, useGetIncomeQuery } from 'redux/transaction/transactionOperations';
 import { useEffect, useState } from 'react';
-import { handleChosenCategoryUniqueLabels } from './DiagramLogic';
 import { nanoid } from '@reduxjs/toolkit';
+import { transactionStore } from 'mobxStores/stores';
+import { observer } from 'mobx-react-lite';
+import { toJS } from 'mobx';
 
 const formated = number =>
   new Intl.NumberFormat('uk', { minimumFractionDigits: 2 }).format(number).replace(',', '.');
 
+const handleChosenCategoryUniqueLabels = (arr, category) => {
+  return arr
+    ?.filter(item => item.category === category)
+    ?.map(({ description }) => description)
+    .filter((el, index, array) => array.indexOf(el) === index);
+};
+
 const Chart = ({ dateTransactionFilter, category }) => {
-  const expenses = useGetExpenseQuery().currentData?.expenses;
-  const incomes = useGetIncomeQuery().currentData?.incomes;
+  const { expenseTransactions, incomeTransactions } = transactionStore;
+  const { expenses } = expenseTransactions;
+  const { incomes } = incomeTransactions;
   const MONTH_CASHFLOW = [];
+
   const [diagramWidth, setDiagramWidth] = useState(window.innerWidth - 40);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const handleResize = () => {
@@ -27,7 +37,9 @@ const Chart = ({ dateTransactionFilter, category }) => {
   if (incomes !== undefined && expenses !== undefined) {
     MONTH_CASHFLOW.push(...incomes, ...expenses);
   }
+  console.log('MONTH_CASHFLOW: ', MONTH_CASHFLOW);
   const chosenCategoryUniqueLabels = handleChosenCategoryUniqueLabels(MONTH_CASHFLOW, category);
+  console.log('chosenCategoryUniqueLabels: ', chosenCategoryUniqueLabels);
 
   const diagramForSelectedMonth = chosenCategoryUniqueLabels
     ?.map(item => ({
@@ -84,4 +96,4 @@ const Chart = ({ dateTransactionFilter, category }) => {
     </ul>
   );
 };
-export default Chart;
+export default observer(Chart);

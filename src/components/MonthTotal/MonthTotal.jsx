@@ -3,22 +3,10 @@ import { InfinitySpin } from 'react-loader-spinner';
 import { observer } from 'mobx-react-lite';
 import { transactionStore } from 'mobxStores/stores';
 
-const MonthTotalStatistics = observer(({ date }) => {
-  const formatDate = date => {
-    let month = (date.getMonth() + 1).toString();
-    let year = date.getFullYear();
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    return [year, month].join('-');
-  };
-  const { getPeriodData, loading } = transactionStore;
-  const { currentData } = getPeriodData(formatDate(date));
-
-  const incomeTotal = currentData?.incomes.incomeTotal;
-
-  const expenseTotal = currentData?.expenses.expenseTotal;
-
+const MonthTotalStatistics = () => {
+  const { loading, periodData } = transactionStore;
+  const incomeTotal = periodData.incomes?.incomeTotal;
+  const expenseTotal = periodData.expenses?.expenseTotal;
   const expenseNormalizer =
     expenseTotal === 0
       ? expenseTotal?.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$& ') + ' грн.'
@@ -63,6 +51,6 @@ const MonthTotalStatistics = observer(({ date }) => {
       </li>
     </ul>
   );
-});
+};
 
-export default MonthTotalStatistics;
+export default observer(MonthTotalStatistics);

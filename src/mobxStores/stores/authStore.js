@@ -162,11 +162,12 @@ class AuthStore {
       console.log('sid initNewSession: ', sid);
       this.setError(null);
       this.setLoading(true);
-      api.setRefreshToken(refreshToken);
       const result = await api.newSession(sid);
-      this.setUserData(result);
       console.log('result initNewSession: ', result);
-      api.setToken(accessToken);
+      api.setToken(result.newAccessToken);
+      this.setToken(result.newAccessToken);
+      this.setRefreshToken(result.newRefreshToken);
+      this.setSid(result.newSid);
       toast.info('Hello, you are already signed in');
     } catch (error) {
       toast.error(

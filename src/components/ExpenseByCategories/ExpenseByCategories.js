@@ -3,14 +3,12 @@ import { nanoid } from '@reduxjs/toolkit';
 import { InfinitySpin } from 'react-loader-spinner';
 import sprite from 'assets/svg/icons.svg';
 import backgroundSprite from 'assets/svg/symbols.svg';
-import {
-  useGetExpenseCategoriesQuery,
-  useGetExpenseQuery,
-} from 'redux/transaction/transactionOperations';
 import { Navigate, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import expenseCategoriesData from './expenseCategoriesData.json';
 import incomeCategoriesData from 'components/IncomeByCategories/incomeCategoriesData.json';
 import { useEffect } from 'react';
+import { transactionStore } from 'mobxStores/stores';
+import { observer } from 'mobx-react-lite';
 
 const getLinkClassName = ({ isActive }) => {
   return isActive ? s.activeLink : s.link;
@@ -24,14 +22,12 @@ const ExpenseByCategories = ({
   date,
 }) => {
   const navigate = useNavigate();
-  const { data: expenseCategories } = useGetExpenseCategoriesQuery();
-  const { data = [], isFetching } = useGetExpenseQuery();
-  const { expenses = [] } = data;
+  const { expenseCategories, expenseTransactions, loading } = transactionStore;
   const { pathname } = useLocation();
 
   const result = expenseCategories?.map(item => ({
     name: item,
-    amount: dateTransactionFilter(expenses)?.reduce((acc, transaction) => {
+    amount: dateTransactionFilter(expenseTransactions.expenses)?.reduce((acc, transaction) => {
       return item === transaction.category ? acc + transaction.amount : acc;
     }, 0),
     convertName: expenseCategoriesData[item],
@@ -81,7 +77,7 @@ const ExpenseByCategories = ({
     });
   return (
     <>
-      {isFetching ? (
+      {loading ? (
         <div className={s.spinner}>
           <InfinitySpin width="200" color="#3f51b5" />
         </div>
@@ -102,4 +98,4 @@ const ExpenseByCategories = ({
   );
 };
 
-export default ExpenseByCategories;
+export default observer(ExpenseByCategories);
