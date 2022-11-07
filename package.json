@@ -1,5 +1,5 @@
 {
-  "name": "kapustamobx",
+  "name": "kapusta",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://github.com/Specter-ode/Kapustamobx/",
@@ -12,7 +12,6 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
-    "dotenv": "^16.0.2",
     "http-proxy-middleware": "^2.0.6",
     "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",
