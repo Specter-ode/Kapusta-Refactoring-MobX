@@ -1,19 +1,44 @@
 import 'modern-normalize/modern-normalize.css';
 import Header from 'components/Header/Header';
 import PagesRoutes from 'PagesRoutes/PagesRoutes';
-// import { useEffect } from 'react';
-// import { authStore } from 'mobxStores/stores';
+import { useEffect } from 'react';
+import { authStore, transactionStore } from 'mobxStores/stores';
 import { ToastContainer, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { observer } from 'mobx-react-lite';
 
 const App = () => {
-  // useEffect(() => {
-  //   if (!authStore.currentUser && authStore.accessToken) {
-  //     console.log('запрос authStore.getCurrentUser: ');
-  //     authStore.getCurrentUser();
-  //   }
-  // }, []);
+  const { currentUser, accessToken } = authStore;
+  const { getExpense, getIncome, getExpenseCategories, getIncomeCategories } = transactionStore;
+
+  useEffect(() => {
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+    const sid = JSON.parse(localStorage.getItem('sid'));
+    if (accessToken && refreshToken && sid) {
+      authStore.setAccessToken(accessToken);
+      authStore.setRefreshToken(refreshToken);
+      authStore.setSid(sid);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser && accessToken) {
+      console.log('запрос getCurrentUser: ');
+      console.log('accessToken: ', accessToken);
+      authStore.getCurrentUser(accessToken);
+    }
+  }, [accessToken, currentUser]);
+
+  useEffect(() => {
+    if (currentUser && accessToken) {
+      getExpense();
+      getIncome();
+      getExpenseCategories();
+      getIncomeCategories();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken, currentUser]);
 
   return (
     <div>

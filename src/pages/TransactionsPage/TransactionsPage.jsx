@@ -14,17 +14,17 @@ const TransactionsPage = () => {
   const vision = window.innerWidth > 767 || pathname === '/transactions';
   const calendarVision = window.innerWidth < 768 && pathname === '/transactions';
   const [date, setDate] = useState(() => new Date());
-  const { getExpense, getIncome, getExpenseCategories, getIncomeCategories } = transactionStore;
-  const { currentUser, accessToken } = authStore;
-  useEffect(() => {
-    if (currentUser && accessToken) {
-      getExpense();
-      getIncome();
-      getExpenseCategories();
-      getIncomeCategories();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, currentUser]);
+  // const { getExpense, getIncome, getExpenseCategories, getIncomeCategories } = transactionStore;
+  // const { currentUser, accessToken } = authStore;
+  // useEffect(() => {
+  //   if (currentUser && accessToken) {
+  //     getExpense();
+  //     getIncome();
+  //     getExpenseCategories();
+  //     getIncomeCategories();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [accessToken, currentUser]);
 
   return (
     <main className={s.meta}>

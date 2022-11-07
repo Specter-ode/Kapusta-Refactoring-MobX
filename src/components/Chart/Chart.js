@@ -1,6 +1,6 @@
 import s from './Chart.module.css';
 import { useEffect, useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 import { transactionStore } from 'mobxStores/stores';
 import { observer } from 'mobx-react-lite';
 

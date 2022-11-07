@@ -137,6 +137,7 @@ class AuthStore {
       this.setAccessToken('');
       this.setRefreshToken('');
       this.setIsLogin(false);
+      localStorage.clear();
     } catch (error) {
       toast.error(`Sorry, logout failed. Try again.`);
       this.setError(error.response.data);
@@ -147,36 +148,34 @@ class AuthStore {
 
   initNewSession = async () => {
     try {
-      const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-      const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
       const sid = JSON.parse(localStorage.getItem('sid'));
-      console.log('accessToken initNewSession: ', accessToken);
-      console.log('refreshToken initNewSession: ', refreshToken);
-      console.log('sid initNewSession: ', sid);
       this.setError(null);
       this.setLoading(true);
-      const result = await api.newSession(sid);
-      console.log('result initNewSession: ', result);
-      api.setToken(result.newAccessToken);
-      this.setToken(result.newAccessToken);
-      this.setRefreshToken(result.newRefreshToken);
-      this.setSid(result.newSid);
-      toast.info('Hello, you are already signed in');
+      const { newAccessToken, newRefreshToken, newSid } = await api.newSession({ sid });
+      api.setToken(newAccessToken);
+      this.setToken(newAccessToken);
+      this.setRefreshToken(newRefreshToken);
+      this.setSid(newSid);
+      localStorage.setItem('accessToken', JSON.stringify(newAccessToken));
+      localStorage.setItem('refreshToken', JSON.stringify(newRefreshToken));
+      localStorage.setItem('sid', JSON.stringify(newSid));
+      toast.info('Session have refreshed');
     } catch (error) {
       toast.error(
-        'Unauthorized. May be you have problems with network or token timed out.Please login again'
+        "May be you have problems with network or token timed out. Can't init new session"
       );
       this.setError(error);
     } finally {
       this.setLoading(false);
     }
   };
-  getCurrentUser = async () => {
+  getCurrentUser = async token => {
     try {
       this.setError(null);
       this.setLoading(true);
-      const result = await api.currentUser();
+      const result = await api.currentUser(token);
       this.setUserData(result);
+      this.setIsLogin(true);
       console.log('result getCurrentUser authStore: ', result);
       toast.info('getCurrentUser info');
     } catch (error) {

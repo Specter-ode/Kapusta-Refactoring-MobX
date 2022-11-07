@@ -1,5 +1,5 @@
 import s from './IncomeByCategories.module.css';
-import { nanoid } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 import { InfinitySpin } from 'react-loader-spinner';
 import sprite from 'assets/svg/icons.svg';
 import backgroundSprite from 'assets/svg/symbols.svg';
