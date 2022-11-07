@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Specter-ode/Kapustamobx/static/css/main.d1a1da5a.css",
-    "main.js": "/Specter-ode/Kapustamobx/static/js/main.e4060462.js",
+    "main.js": "/Specter-ode/Kapustamobx/static/js/main.726c30ba.js",
     "static/css/295.954206c4.chunk.css": "/Specter-ode/Kapustamobx/static/css/295.954206c4.chunk.css",
-    "static/js/295.a492df1c.chunk.js": "/Specter-ode/Kapustamobx/static/js/295.a492df1c.chunk.js",
+    "static/js/295.c112aaaa.chunk.js": "/Specter-ode/Kapustamobx/static/js/295.c112aaaa.chunk.js",
     "static/css/5.3ddee24e.chunk.css": "/Specter-ode/Kapustamobx/static/css/5.3ddee24e.chunk.css",
-    "static/js/5.60090dca.chunk.js": "/Specter-ode/Kapustamobx/static/js/5.60090dca.chunk.js",
+    "static/js/5.0f0af739.chunk.js": "/Specter-ode/Kapustamobx/static/js/5.0f0af739.chunk.js",
     "static/css/892.3c815c0c.chunk.css": "/Specter-ode/Kapustamobx/static/css/892.3c815c0c.chunk.css",
-    "static/js/892.049e5286.chunk.js": "/Specter-ode/Kapustamobx/static/js/892.049e5286.chunk.js",
+    "static/js/892.cd5f958d.chunk.js": "/Specter-ode/Kapustamobx/static/js/892.cd5f958d.chunk.js",
     "static/css/849.48bdda7a.chunk.css": "/Specter-ode/Kapustamobx/static/css/849.48bdda7a.chunk.css",
-    "static/js/849.06c1e630.chunk.js": "/Specter-ode/Kapustamobx/static/js/849.06c1e630.chunk.js",
+    "static/js/849.4dcfe433.chunk.js": "/Specter-ode/Kapustamobx/static/js/849.4dcfe433.chunk.js",
     "static/css/44.54bb5762.chunk.css": "/Specter-ode/Kapustamobx/static/css/44.54bb5762.chunk.css",
-    "static/js/44.12ca828d.chunk.js": "/Specter-ode/Kapustamobx/static/js/44.12ca828d.chunk.js",
-    "static/js/290.f79e08ea.chunk.js": "/Specter-ode/Kapustamobx/static/js/290.f79e08ea.chunk.js",
+    "static/js/44.40efd3da.chunk.js": "/Specter-ode/Kapustamobx/static/js/44.40efd3da.chunk.js",
+    "static/js/290.13335a1c.chunk.js": "/Specter-ode/Kapustamobx/static/js/290.13335a1c.chunk.js",
     "static/media/error404.jpg": "/Specter-ode/Kapustamobx/static/media/error404.8bd5fb038884dbcdd79b.jpg",
     "static/media/fon.png": "/Specter-ode/Kapustamobx/static/media/fon.c90b8024e70744929608.png",
     "static/media/icons.svg": "/Specter-ode/Kapustamobx/static/media/icons.13564d682188ff87cd0145486783fb7a.svg",
@@ -34,21 +34,21 @@
     "static/media/left-arrow.svg": "/Specter-ode/Kapustamobx/static/media/left-arrow.8b6caa1d8ab8f5a202642d178acd4a31.svg",
     "static/media/right-arrow.svg": "/Specter-ode/Kapustamobx/static/media/right-arrow.a448f03df0223a721f3c3b4b435f9041.svg",
     "main.d1a1da5a.css.map": "/Specter-ode/Kapustamobx/static/css/main.d1a1da5a.css.map",
-    "main.e4060462.js.map": "/Specter-ode/Kapustamobx/static/js/main.e4060462.js.map",
+    "main.726c30ba.js.map": "/Specter-ode/Kapustamobx/static/js/main.726c30ba.js.map",
     "295.954206c4.chunk.css.map": "/Specter-ode/Kapustamobx/static/css/295.954206c4.chunk.css.map",
-    "295.a492df1c.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/295.a492df1c.chunk.js.map",
+    "295.c112aaaa.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/295.c112aaaa.chunk.js.map",
     "5.3ddee24e.chunk.css.map": "/Specter-ode/Kapustamobx/static/css/5.3ddee24e.chunk.css.map",
-    "5.60090dca.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/5.60090dca.chunk.js.map",
+    "5.0f0af739.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/5.0f0af739.chunk.js.map",
     "892.3c815c0c.chunk.css.map": "/Specter-ode/Kapustamobx/static/css/892.3c815c0c.chunk.css.map",
-    "892.049e5286.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/892.049e5286.chunk.js.map",
+    "892.cd5f958d.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/892.cd5f958d.chunk.js.map",
     "849.48bdda7a.chunk.css.map": "/Specter-ode/Kapustamobx/static/css/849.48bdda7a.chunk.css.map",
-    "849.06c1e630.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/849.06c1e630.chunk.js.map",
+    "849.4dcfe433.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/849.4dcfe433.chunk.js.map",
     "44.54bb5762.chunk.css.map": "/Specter-ode/Kapustamobx/static/css/44.54bb5762.chunk.css.map",
-    "44.12ca828d.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/44.12ca828d.chunk.js.map",
-    "290.f79e08ea.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/290.f79e08ea.chunk.js.map"
+    "44.40efd3da.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/44.40efd3da.chunk.js.map",
+    "290.13335a1c.chunk.js.map": "/Specter-ode/Kapustamobx/static/js/290.13335a1c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d1a1da5a.css",
-    "static/js/main.e4060462.js"
+    "static/js/main.726c30ba.js"
   ]
 }
