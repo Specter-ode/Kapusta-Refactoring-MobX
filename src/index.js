@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from 'components/App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import instance from './helpers/api/auth';
-import { authStore } from 'mobxStores/stores';
+// import instance from './helpers/api/auth';
+// import { authStore } from 'mobxStores/stores';
 import { GoogleOAuthProvider } from '@moeindana/google-oauth';
 
 console.log('process.env.REACT_APP_CLIENT_ID: ', process.env.REACT_APP_CLIENT_ID);
