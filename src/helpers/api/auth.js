@@ -50,7 +50,6 @@ export const newSession = async sid => {
   return result.data;
 };
 export const currentUser = async accessToken => {
-  console.log('accessToken api currentUser: ', accessToken);
   setToken(accessToken);
   const result = await instance.get('/user');
   return result.data;

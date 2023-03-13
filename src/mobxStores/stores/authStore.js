@@ -176,12 +176,7 @@ class AuthStore {
       const result = await api.currentUser(token);
       this.setUserData(result);
       this.setIsLogin(true);
-      console.log('result getCurrentUser authStore: ', result);
-      toast.info('getCurrentUser info');
     } catch (error) {
-      toast.error(
-        'Unauthorized. May be you have problems with network or token timed out.Please login again'
-      );
       this.setError(error);
     } finally {
       this.setLoading(false);

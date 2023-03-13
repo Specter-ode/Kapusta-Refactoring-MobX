@@ -24,8 +24,6 @@ const App = () => {
 
   useEffect(() => {
     if (!currentUser && accessToken) {
-      console.log('запрос getCurrentUser: ');
-      console.log('accessToken: ', accessToken);
       authStore.getCurrentUser(accessToken);
     }
   }, [accessToken, currentUser]);
